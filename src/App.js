@@ -15,27 +15,24 @@ function download(filename, text) {
   element.click();
   document.body.removeChild(element);
 }
-function addStyle(styleString) {
-  const style = document.createElement("style");
-  style.textContent = styleString;
-  document.head.append(style);
-}
+// function addStyle(styleString) {
+//   const style = document.createElement("style");
+//   style.textContent = styleString;
+//   document.head.append(style);
+// }
 function App() {
   const [value, updateValue] = useState("");
   const [jsvalue, updatejsValue] = useState("");
-  const [cssvalue, updatecssValue] = useState("");
+
+  const [javaValue, updatejavaValue] = useState("");
+  const [pythonValue, updatepythonValue] = useState("");
+  const [cppValue, updatecppValue] = useState("");
+  const [Cvalue, updateCValue] = useState("");
   const [preview, updatePreview] = useState("");
   const [dark, updateDark] = useState(false);
   const [selected, updateSelected] = useState("HTML");
   console.log(selected);
-  useEffect(() => {
-    try {
-     eval(jsvalue);
-    } catch (e) {
-      alert("Please verify your JS");
-    }
-    addStyle(cssvalue);
-  }, []);
+  
 
   return (
     <div>
@@ -46,7 +43,7 @@ function App() {
           onClick={() => {
             download(
               "download.txt",
-              selected === "JS" ? jsvalue : selected === "CSS" ? cssvalue : value
+              selected === "JS" ? jsvalue : selected === "C++" ? cppValue : selected === "java" ? javaValue : selected === "python" ? pythonValue : Cvalue
             );
           }}
         >
@@ -71,7 +68,7 @@ function App() {
             } catch (e) {
               alert("Please verify your JS");
             }
-            addStyle(cssvalue);
+           
           }}
         >
           Run
@@ -85,20 +82,21 @@ function App() {
             updateSelected(e.target.value);
           }}
         >
-          <option value="HTML">C</option>
-          <option value="CSS">C++</option>
+          <option value="C">C</option>
+          <option value="C++">C++</option>
           <option value="JS">JS</option>
-          <option value="Java">Java</option>
+          <option value="java">Java</option>
+          <option value="python">Python</option>
         </select>
         <div className={`editor mr-0 ${dark ? "colorDark" : ""}`}>
-          {selected === "HTML" && (
+          {selected === "C" && (
             <Editor
-              mode="html"
+              mode="c_cpp"
               dark={dark}
               onChange={(e) => {
-                updateValue(e);
+                updateCValue(e);
               }}
-              value={value}
+              value={Cvalue}
             />
           )}
           {selected === "JS" && (
@@ -111,16 +109,39 @@ function App() {
               value={jsvalue}
             />
           )}
-          {selected === "CSS" && (
+          {selected === "C++" && (
             <Editor
-              mode="css"
+              mode="c_cpp"
               dark={dark}
               onChange={(e) => {
-                updatecssValue(e);
+                updatecppValue(e);
               }}
-              value={cssvalue}
+              value={cppValue}
             />
+
           )}
+          {selected === 'java' &&(
+           <Editor
+           mode="java"
+           dark={dark}
+           onChange={(e) => {
+             updatejavaValue(e);
+           }}
+           value={javaValue}
+         />
+          )}
+
+      {selected === 'python' &&(
+           <Editor
+           mode="python"
+           dark={dark}
+           onChange={(e) => {
+             updatepythonValue(e);
+           }}
+           value={pythonValue}
+         />
+          )}
+        
         </div>
         <div className={`editor ${dark && !preview ? "colorDark" : ""}`}>
           <div dangerouslySetInnerHTML={{ __html: preview }} />

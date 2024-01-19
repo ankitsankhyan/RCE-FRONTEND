@@ -1,29 +1,54 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import AceEditor from "react-ace";
+import "ace-builds/src-noconflict/ext-language_tools";
+import "ace-builds/src-noconflict/mode-javascript";
+import "ace-builds/src-noconflict/snippets/javascript"
+
+import "ace-builds/src-noconflict/mode-c_cpp";
+import "ace-builds/src-noconflict/snippets/c_cpp";
+
+import "ace-builds/src-noconflict/mode-java";
+import "ace-builds/src-noconflict/snippets/java";
+
+import "ace-builds/src-noconflict/mode-python";
+import "ace-builds/src-noconflict/snippets/python";
+
+
+// Import only the necessary parts of the ace library for this file
+import ace from "ace-builds/src-noconflict/ace";
 import "ace-builds/src-noconflict/theme-chaos";
 import "ace-builds/src-noconflict/theme-github";
-import "ace-builds/src-noconflict/ext-language_tools.js";
-
-const ace = require("ace-builds/src-noconflict/ace");
-ace.config.set(
-  "basePath",
-  "https://cdn.jsdelivr.net/npm/ace-builds@1.4.3/src-noconflict/"
-);
-ace.config.setModuleUrl(
-  "ace/mode/javascript_worker",
-  "https://cdn.jsdelivr.net/npm/ace-builds@1.4.3/src-noconflict/worker-javascript.js"
-);
 
 export default function Editor(data) {
+  const editorRef = useRef(null);
+  console.log(data);
+  const handleEditorLoad = (editor) => {
+    // Save the editor reference
+    editorRef.current = editor;
+
+    // Set selection range
+    const Range = ace.require("ace/range").Range;
+    editorRef.current.selection.setRange(new Range(4, 0, 6, 5));
+
+    // Add marker
+    const markerRange = new Range(0, 0, 1, 5);
+    const markerId = editorRef.current.session.addMarker(markerRange, "blue", "text");
+
+    // Cleanup marker when component unmounts
+    return () => {
+      editorRef.current.session.removeMarker(markerId);
+    };
+  };
+
   return (
     AceEditor && (
       <AceEditor
-        mode="javascript"  // Hardcoded to JavaScript mode
+        mode={data.mode}
         width="100%"
         height="100%"
         theme={data.dark ? "chaos" : "github"}
         onChange={data.onChange}
-        fontSize={14}
+        fontSize={16}
         showPrintMargin={true}
         showGutter={true}
         highlightActiveLine={true}
@@ -37,6 +62,7 @@ export default function Editor(data) {
           showLineNumbers: true,
           tabSize: 2
         }}
+        onLoad={handleEditorLoad} // Callback when the editor is loaded
       />
     )
   );
