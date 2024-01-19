@@ -4,6 +4,35 @@ body {
   height: 100vh;
   user-select: none;
 }
+.extra{
+  display: flex;
+  width:100%;
+  flex-direction: column;
+  justify-content: space-between;
+align-items: center;
+
+ 
+
+}
+.input{
+  width:100%;
+  height:45%;
+
+}
+.output{
+  background:#d3d3d3 ;
+  height: 45%;
+  width: 100%;
+  border-radius: 10px;
+
+}
+
+.input textarea{
+  width:98%;
+  height:100%;
+  border-radius: 10px;
+  padding: 10px;
+}
 .colorWhite {
     color: whitesmoke !important;
 }
@@ -14,12 +43,25 @@ body {
   height: 44px;
   padding: 4px 12px;
 }
+.editor1{
+  padding: 8px;
+ 
+  border-radius: 4px;
+  margin: 0 12px;
+  height: calc(100vh - 80px);
+  display:flex;
+  width:250%;
+}
 .editor {
   padding: 8px;
   background: white;
   border-radius: 4px;
   margin: 0 12px;
   height: calc(100vh - 80px);
+  display:flex;
+  width:100%;
+ 
+
 }
 .material-icons {
     color: grey;
@@ -65,13 +107,16 @@ body {
 }
 .playground{
     position: relative;
+   
+    
 }
 @media screen and (min-width: 800px) {
   .editor {
-    width: 50%;
+    width: 100%;
   }
   .playground {
       display: flex;
+      
   }
   .mr-0 {
       margin-right: 0px !important;
@@ -79,12 +124,40 @@ body {
 }
 
 @media screen and (max-width: 799px) {
+  .extra{
+   
+     flex-direction:column;
+     width:100%;
+  }
   .editor {
-      height: 50%;
+      width:100%;
+      height:100%;
+      
       margin-bottom: 10px;
+    
+     
+  }
+  .input{
+    height:50%;
+    width:90%;
+
+  }
+  .output{
+    height:50%;
+    width:90%;
+    margin:50px;
+  }
+  .editor1{
+    width:100%;
+    height:50%;
   }
   .playground {
-    height: calc(100vh - 110px);
+    position:absolute;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    width:100%;
+    height:100%;
   }
   .dropdown {
       right: 0%;

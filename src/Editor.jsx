@@ -49,7 +49,7 @@ export default function Editor(data) {
         theme={data.dark ? "chaos" : "github"}
         onChange={data.onChange}
         fontSize={16}
-        showPrintMargin={true}
+        showPrintMargin={false}
         showGutter={true}
         highlightActiveLine={true}
         value={data.value}

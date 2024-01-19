@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Editor from "./Editor";
 import "./style.css";
+import client from "./client";
 
 const body = document.getElementsByTagName("body");
 function download(filename, text) {
@@ -14,25 +15,47 @@ function download(filename, text) {
   document.body.appendChild(element);
   element.click();
   document.body.removeChild(element);
-}
-// function addStyle(styleString) {
-//   const style = document.createElement("style");
-//   style.textContent = styleString;
-//   document.head.append(style);
-// }
-function App() {
-  const [value, updateValue] = useState("");
-  const [jsvalue, updatejsValue] = useState("");
 
-  const [javaValue, updatejavaValue] = useState("");
-  const [pythonValue, updatepythonValue] = useState("");
-  const [cppValue, updatecppValue] = useState("");
-  const [Cvalue, updateCValue] = useState("");
+
+}
+
+function App() {
+  const [input, updateInput] = useState("");
+  const [value, updateValue] = useState(`#include <stdio.h>
+  int main() {
+      // Write C code here
+      printf("Hello world");
+  return 0;
+  }`);
+  const [language, updateLanguage] = useState("C");
+  const [jsvalue, updatejsValue] = useState(`
+  console.log("Welcome to Online Program");`);
+
+  const [javaValue, updatejavaValue] = useState(`class HelloWorld {
+      public static void main(String[] args) {
+          System.out.println("Hello, World!");
+      }
+  }`);
+
+
+  const [pythonValue, updatepythonValue] = useState(`print("Hello world")`);
+  const [cppValue, updatecppValue] = useState(`#include <iostream>
+  int main() {
+      // Write C++ code here
+      std::cout << "Hello world!";
+      return 0;
+  }`);
+  const [Cvalue, updateCValue] = useState(`#include <stdio.h>
+  int main() {
+      // Write C code here
+      printf("Hello world");
+  return 0;
+  }`);
+  
+
   const [preview, updatePreview] = useState("");
   const [dark, updateDark] = useState(false);
-  const [selected, updateSelected] = useState("HTML");
-  console.log(selected);
-  
+  const [selected, updateSelected] = useState("C");
 
   return (
     <div>
@@ -62,13 +85,10 @@ function App() {
         <div
           className={`run ${dark ? "darkRun" : ""}`}
           onClick={() => {
-            updatePreview(value);
-            try {
-              eval(jsvalue);
-            } catch (e) {
-              alert("Please verify your JS");
-            }
-           
+            
+             let data = {value, language,input};
+             console.log(data);
+              client.post("/run", data);
           }}
         >
           Run
@@ -88,13 +108,18 @@ function App() {
           <option value="java">Java</option>
           <option value="python">Python</option>
         </select>
-        <div className={`editor mr-0 ${dark ? "colorDark" : ""}`}>
-          {selected === "C" && (
+        <div className={`editor1 mr-0 ${dark ? "colorDark" : ""}`}>
+          
+ 
+    
+   {selected === "C" && (
             <Editor
               mode="c_cpp"
               dark={dark}
               onChange={(e) => {
                 updateCValue(e);
+                updateValue(e);
+                updateLanguage("C")
               }}
               value={Cvalue}
             />
@@ -105,6 +130,8 @@ function App() {
               dark={dark}
               onChange={(e) => {
                 updatejsValue(e);
+                updateValue(e);
+                updateLanguage("JS");
               }}
               value={jsvalue}
             />
@@ -115,6 +142,8 @@ function App() {
               dark={dark}
               onChange={(e) => {
                 updatecppValue(e);
+                updateValue(e);
+                updateLanguage("C++");
               }}
               value={cppValue}
             />
@@ -126,6 +155,8 @@ function App() {
            dark={dark}
            onChange={(e) => {
              updatejavaValue(e);
+             updateValue(e);
+             updateLanguage("java");
            }}
            value={javaValue}
          />
@@ -137,15 +168,35 @@ function App() {
            dark={dark}
            onChange={(e) => {
              updatepythonValue(e);
+             updateValue(e);
+             updateLanguage("python");
            }}
            value={pythonValue}
          />
           )}
+          
+
+  </div>
+          
+  <div className={`editor ${dark ? "colorDark" : ""}`}>
+    <div className="extra">
+    <div className="input">
+          <textarea type="text" onChange={(e)=>{updateInput(e.target.value)}}/>
+        </div>
+         <div className="output">
+          
+         </div>
+    </div>
+        
         
         </div>
-        <div className={`editor ${dark && !preview ? "colorDark" : ""}`}>
-          <div dangerouslySetInnerHTML={{ __html: preview }} />
-        </div>
+       
+       
+        
+      
+       
+          
+      
       </div>
     </div>
   );
