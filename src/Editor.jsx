@@ -21,11 +21,11 @@ import "ace-builds/src-noconflict/theme-github";
 
 export default function Editor(data) {
   const editorRef = useRef(null);
-  console.log(data);
+  
   const handleEditorLoad = (editor) => {
     // Save the editor reference
     editorRef.current = editor;
-
+  
     // Set selection range
     const Range = ace.require("ace/range").Range;
     editorRef.current.selection.setRange(new Range(4, 0, 6, 5));
@@ -59,6 +59,7 @@ export default function Editor(data) {
           enableBasicAutocompletion: true,
           enableLiveAutocompletion: true,
           enableSnippets: true,
+          enableMultiselect: false,
           showLineNumbers: true,
           tabSize: 2
         }}

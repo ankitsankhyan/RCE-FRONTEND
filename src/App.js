@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import Editor from "./Editor";
 import "./style.css";
 import client from "./client";
+import { MdOutlineSaveAlt } from "react-icons/md";
+import { FaPlay } from "react-icons/fa6";
+import { FaRegFileCode } from "react-icons/fa";
 
 const body = document.getElementsByTagName("body");
 function download(filename, text) {
@@ -60,19 +63,8 @@ function App() {
   return (
     <div>
       <div className="navbar">
-        <i
-          title="save"
-          className={`material-icons ${dark ? "colorWhite" : ""}`}
-          onClick={() => {
-            download(
-              "download.txt",
-              selected === "JS" ? jsvalue : selected === "C++" ? cppValue : selected === "java" ? javaValue : selected === "python" ? pythonValue : Cvalue
-            );
-          }}
-        >
-       <button>Save</button>
-        </i>
-        <i
+      
+        <div
           title={dark ? "go light" : "go dark"}
           className={`material-icons ${dark ? "colorWhite" : ""}`}
           onClick={() => {
@@ -80,10 +72,25 @@ function App() {
             updateDark(!dark);
           }}
         >
-         Code Editor
-        </i>
-        <div
-          className={`run ${dark ? "darkRun" : ""}`}
+           <FaRegFileCode />
+           Pro Editor
+
+        </div>
+      <div className="options">
+      <button
+          title="save"
+          className={`save ${dark ? "darkRun" : "colorWhite"}`}
+          onClick={() => {
+            download(
+              "download.txt",
+              selected === "JS" ? jsvalue : selected === "C++" ? cppValue : selected === "java" ? javaValue : selected === "python" ? pythonValue : Cvalue
+            );
+          }}
+        >
+          <MdOutlineSaveAlt style={{transform:"scale(1.5)"}}  />
+        </button>
+        <button
+          className={`save ${dark ? "darkRun" : "colorWhite"}`}
           onClick={() => {
             
              let data = {value, language,input};
@@ -91,8 +98,10 @@ function App() {
               client.post("/run", data);
           }}
         >
-          Run
-        </div>
+        <FaPlay style={{transform:"scale(1.5)"}} />
+        </button>
+      </div>
+       
       </div>
       <div className="playground">
         <select
@@ -180,11 +189,15 @@ function App() {
           
   <div className={`editor ${dark ? "colorDark" : ""}`}>
     <div className="extra">
+    
+    <h4 style={{margin:"0px"}}>Input</h4>
     <div className="input">
+          
           <textarea type="text" onChange={(e)=>{updateInput(e.target.value)}}/>
         </div>
+        <h4 style={{marginTop:"50px", marginBottom:"0px"}}>Output</h4>
          <div className="output">
-          
+         
          </div>
     </div>
         
