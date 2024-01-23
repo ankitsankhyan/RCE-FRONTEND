@@ -70,6 +70,7 @@ function App() {
       .then(response => {
         console.log(response);
         updateOutput(response.data.output);
+        toast.success("Code run successfully!");
       })
       .catch(error => {
         console.error(error);
@@ -102,6 +103,8 @@ function App() {
     axios.get("/api/input")
       .then(response => {
         updateInput(response.data.content);
+       
+
       })
       .catch(error => {
         console.error(error);
@@ -247,7 +250,7 @@ function App() {
             </div>
             <h4 style={{ marginTop: "50px", marginBottom: "0px" }}>Output</h4>
             <div className="output">
-            <div dangerouslySetInnerHTML={{ __html: output.replace(/\r\n/g, '<br/>') }} />
+            <div style={{padding:'10px'}} dangerouslySetInnerHTML={{ __html: output.replace(/\r\n/g, '<br/>') }} />
             </div>
           </div>
         </div>
