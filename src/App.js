@@ -64,6 +64,7 @@ function App() {
 
   const handleRun = () => {
     let data = { value, language, input };
+    console.log(data);
     setRunButtonPressed(true); //important step to make the fetch the input and output
     client.post("/api/code", data)
       .then(response => {
@@ -78,8 +79,26 @@ function App() {
 
   //fetch input.txt and output.txt content after making the API request,
   useEffect(() => {
+     
+    if(selected === "C"){
+      updateValue(Cvalue);
+      updateLanguage("C");
+      
+    }
+    if(selected === "JS"){
+      updateValue(jsvalue);
+      updateLanguage("JS");
+    }
+    if(selected === "C++"){
+      updateValue(cppValue);
+      updateLanguage("C++");
+    }
+
+  },[selected])
+  useEffect(() => {
     if(runButtonPressed){
       // Fetch input.txt content
+      console.log('value', value);
     axios.get("/api/input")
       .then(response => {
         updateInput(response.data.content);
@@ -98,6 +117,8 @@ function App() {
         console.error(error);
         toast.error("Error fetching output.txt content. Please check console for details.");
       });
+
+     
   }}, [runButtonPressed]);
 
   return (
@@ -226,9 +247,7 @@ function App() {
             </div>
             <h4 style={{ marginTop: "50px", marginBottom: "0px" }}>Output</h4>
             <div className="output">
-              <div>
-                {output}
-              </div>
+            <div dangerouslySetInnerHTML={{ __html: output.replace(/\r\n/g, '<br/>') }} />
             </div>
           </div>
         </div>
