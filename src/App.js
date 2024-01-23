@@ -73,8 +73,9 @@ function App() {
         toast.success("Code run successfully!");
       })
       .catch(error => {
-        console.error(error);
-        toast.error("Error running code. Please check console for details.");
+         console.log(error.response.data.error);
+         updateOutput(error.response.data.error);
+        toast.error("Error running code. Please check output for details.");
       });
   };
 
@@ -94,35 +95,17 @@ function App() {
       updateValue(cppValue);
       updateLanguage("C++");
     }
+    if(selected === 'python'){
+       updateValue(pythonValue)
+       updateLanguage('python');
+    }
+    if(selected === 'java'){
+       updateValue(javaValue);
+       updateLanguage('java');
+    }
 
   },[selected])
-  useEffect(() => {
-    if(runButtonPressed){
-      // Fetch input.txt content
-      console.log('value', value);
-    axios.get("/api/input")
-      .then(response => {
-        updateInput(response.data.content);
-       
 
-      })
-      .catch(error => {
-        console.error(error);
-        toast.error("Error fetching input.txt content. Please check console for details.");
-      });
-
-    // Fetch output.txt content
-    axios.get("/api/output")
-      .then(response => {
-        updateOutput(response.data.content);
-      })
-      .catch(error => {
-        console.error(error);
-        toast.error("Error fetching output.txt content. Please check console for details.");
-      });
-
-     
-  }}, [runButtonPressed]);
 
   return (
     <div>
@@ -250,7 +233,7 @@ function App() {
             </div>
             <h4 style={{ marginTop: "50px", marginBottom: "0px" }}>Output</h4>
             <div className="output">
-            <div style={{padding:'10px'}} dangerouslySetInnerHTML={{ __html: output.replace(/\r\n/g, '<br/>') }} />
+            <div style={{padding:'10px', overflowY:'scroll', height:"95%"}} dangerouslySetInnerHTML={{ __html: output.replace(/\r\n/g, '<br/>') }} />
             </div>
           </div>
         </div>
