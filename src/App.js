@@ -127,9 +127,14 @@ function App() {
             body[0].style.background = dark ? "lightgrey" : "#616161";
             updateDark(!dark);
           }}
-        >
-          <FaRegFileCode />
-          Pro Editor
+        > 
+      
+       <FaRegFileCode className="logo"/>
+      
+         
+         <div className="title">
+           Pro Editor
+         </div>
         </div>
         <div className="options">
           <button

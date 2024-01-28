@@ -53,6 +53,7 @@ align-items: center;
   height: 45%;
   width: 100%;
   border-radius: 10px;
+  padding: 10px;
 
 }
 
@@ -61,6 +62,7 @@ align-items: center;
   height:100%;
   border-radius: 10px;
   padding: 10px;
+ 
 }
 .colorWhite {
     color: whitesmoke !important;
@@ -108,6 +110,9 @@ align-items: center;
     font-size: 32px;
     margin: 6px 4px;
     cursor: pointer;
+  
+    display:flex;
+    align-items: center;
 }
 .run {
     display: inline-block;
@@ -146,9 +151,7 @@ align-items: center;
     font-weight: bold;
 }
 .playground{
-    position: relative;
-   
-    
+    position: relative;    
 }
 @media screen and (min-width: 800px) {
   .editor {
@@ -212,7 +215,76 @@ align-items: center;
     width:100%;
     height:100%;
   }
-  .dropdown {
-      right: 0%;
+ 
+}
+.title{
+  display:inline;
+}
+
+@media screen and (max-width: 500px) {
+  .editor {
+    width: 100%;
+  }
+  .playground {
+      display: flex;
+      
+  }
+  .input{
+    width:90%;
+    margin-right: 10px;
+    margin-top:10px;
+    
+  }
+  .output{
+    width:93%;
+   
+    margin-top:10px;
+    
+  }
+  
+ .save{
+    width:40px;
+    height:30px;
+ }
+ .options{
+    width:100px;
+   
+    padding: 6px;
+ }
+
+ .dropdown{
+   right:30%
+ }
+ .title{
+    font-size: 20px;
+    text-align: center;
+ }
+ .logo{
+    font-size: 25px;
+ }
+}
+
+@media screen and (max-width: 300px) {
+  .logo{
+    font-size: 20px;
+  }
+  .title{
+    font-size: 15px;
+  }
+  .save{
+    width:35px;
+    height:25px;
+  }
+  .options{
+    width:80px;
+  }
+
+  .dropdown{
+    height: 25px;
+    width: 60px;
+  }
+  .navbar{
+    height: 30px;
+    padding: 2px 8px;
   }
 }
