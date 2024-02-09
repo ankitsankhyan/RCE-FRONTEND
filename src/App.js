@@ -69,12 +69,17 @@ function App() {
     client.post("/api/code", data)
       .then(response => {
         console.log(response);
+        // console.log(response.data);
         updateOutput(response.data.output);
         toast.success("Code run successfully!");
       })
       .catch(error => {
-         console.log(error.response.data.error);
-         updateOutput(error.response.data.error);
+        console.log(error.message, 'is error');
+        //  console.log(error.response.data);
+        //  updateOutput(error.message || error.response.data.output || error.response.data.error || "Error running code. Please check output for details.");
+        if(error.message === "Network Error"){
+          updateOutput("Code execution timed out or Internet connection lost. Please try again.");
+        }
         toast.error("Error running code. Please check output for details.");
       });
   };
@@ -162,7 +167,7 @@ function App() {
             updateSelected(e.target.value);
           }}
         >
-          <option value="C">C</option>
+          {/* <option value="C">C</option> */}
           <option value="C++">C++</option>
           <option value="JS">JS</option>
           <option value="java">Java</option>
